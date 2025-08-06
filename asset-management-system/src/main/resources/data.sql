@@ -1,0 +1,1 @@
+INSERT INTO roles (name) VALUES ('EMPLOYEE'), ('ADMIN'), ('STORE') ON DUPLICATE KEY UPDATE name=name;
