@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Accessories</title>
+</head>
+<body>
+    <h1>Accessories</h1>
+
+    <h2>Add Accessory</h2>
+    <form th:action="@{/accessories}" method="post">
+        <div>
+            <label>Name:</label>
+            <input type="text" name="name"/>
+        </div>
+        <div>
+            <label>Stock:</label>
+            <input type="number" name="stock"/>
+        </div>
+        <div>
+            <input type="submit" value="Add"/>
+        </div>
+    </form>
+
+    <h2>Existing Accessories</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="accessory : ${accessories}">
+                <td th:text="${accessory.id}"></td>
+                <td th:text="${accessory.name}"></td>
+                <td th:text="${accessory.stock}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Asset Requests</title>
+</head>
+<body>
+    <h1>Asset Requests</h1>
+
+    <div sec:authorize="hasRole('EMPLOYEE')">
+        <h2>Request an Accessory</h2>
+        <form th:action="@{/requests}" method="post">
+            <div>
+                <label>Accessory:</label>
+                <select name="accessoryId">
+                    <option th:each="accessory : ${accessories}"
+                            th:value="${accessory.id}"
+                            th:text="${accessory.name}"></option>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="Request"/>
+            </div>
+        </form>
+    </div>
+
+    <h2>My Requests</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Accessory</th>
+                <th>Status</th>
+                <th sec:authorize="hasRole('ADMIN')">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="request : ${requests}">
+                <td th:text="${request.id}"></td>
+                <td th:text="${request.accessory.name}"></td>
+                <td th:text="${request.status}"></td>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{/requests/{id}/approve(id=${request.id})}" method="post" style="display:inline;">
+                        <button type="submit">Approve</button>
+                    </form>
+                    <form th:action="@{/requests/{id}/deny(id=${request.id})}" method="post" style="display:inline;">
+                        <button type="submit">Deny</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
