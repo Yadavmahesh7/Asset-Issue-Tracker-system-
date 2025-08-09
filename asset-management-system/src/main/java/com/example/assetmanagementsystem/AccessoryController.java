@@ -1,13 +1,17 @@
 package com.example.assetmanagementsystem;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.example.assetmanagementsystem.dto.AccessoryDto;
+import com.example.assetmanagementsystem.dto.DtoMapper;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api/accessories")
 public class AccessoryController {
 
     private final AccessoryRepository accessoryRepository;
@@ -16,20 +20,10 @@ public class AccessoryController {
         this.accessoryRepository = accessoryRepository;
     }
 
-    @GetMapping("/accessories")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String listAccessories(Model model) {
-        model.addAttribute("accessories", accessoryRepository.findAll());
-        return "accessories";
-    }
-
-    @PostMapping("/accessories")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String addAccessory(@RequestParam String name, @RequestParam int stock) {
-        Accessory accessory = new Accessory();
-        accessory.setName(name);
-        accessory.setStock(stock);
-        accessoryRepository.save(accessory);
-        return "redirect:/accessories";
+    @GetMapping
+    public List<AccessoryDto> getAllAccessories() {
+        return accessoryRepository.findAll().stream()
+                .map(DtoMapper::toAccessoryDto)
+                .collect(Collectors.toList());
     }
 }

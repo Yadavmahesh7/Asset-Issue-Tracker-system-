@@ -1,0 +1,3 @@
+/app/asset-management-system/src/test/java/com/example/assetmanagementsystem/AuthenticationControllerTest.java
+/app/asset-management-system/src/test/java/com/example/assetmanagementsystem/AdminControllerTest.java
+/app/asset-management-system/src/test/java/com/example/assetmanagementsystem/AssetRequestControllerTest.java

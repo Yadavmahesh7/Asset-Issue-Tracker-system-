@@ -2,6 +2,6 @@ package com.example.assetmanagementsystem;
 
 public enum Role {
     EMPLOYEE,
-    STORE,
+    STORE_MANAGER,
     ADMIN
 }
